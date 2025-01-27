@@ -1,6 +1,6 @@
 // blocked words data, separated by comma
 const blocklist =
-  'skit, fan, jävla, helvete, kuk, fitta, knulla, hora, as, piss, rövhål, idiot, slampa, sug, dö';
+  'skit, fan, jävla, jävlar, helvete, kuk, fitta, knulla, hora, as, piss, rövhål, idiot, slampa, sug, dö, döda';
 
 const form = document.getElementById('mainForm');
 const submitBtn = document.getElementById('submit');
@@ -9,8 +9,11 @@ const submitBtn = document.getElementById('submit');
 function filterForbiddenWords(message, blocklist) {
   const forbiddenWords = blocklist.split(',').map((word) => word.trim());
   forbiddenWords.forEach((word) => {
-    const regex = new RegExp(`\\b${word}(\\w+)?\\b`, 'gi');
-    message = message.replace(regex, '*');
+    const regex = new RegExp(
+      `(^|[^a-zåäöA-ZÅÄÖ])${word}(?=[^a-zåäöA-ZÅÄÖ]|$)`,
+      'gi'
+    );
+    message = message.replace(regex, (match, p1) => `${p1}*`);
   });
 
   return message;
@@ -34,6 +37,6 @@ submit.addEventListener('click', (event) => {
   // calling the filtering function on the message
   const filteredMessage = filterForbiddenWords(originalMessage, blocklist);
 
-  // printing out the filtered message in the console
+  // printing out the filtered message in the console - remove once approved
   console.log(filteredMessage);
 });
