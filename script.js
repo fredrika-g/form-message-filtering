@@ -22,6 +22,13 @@ submit.addEventListener('click', (event) => {
 
   // getting entered message
   const messageField = document.getElementById('message');
+
+  //   if no message element in form, return
+  if (!messageField) {
+    return;
+  }
+
+  //   if message exists, proceed
   const originalMessage = messageField.value;
 
   // calling the filtering function on the message
